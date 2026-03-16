@@ -48,22 +48,31 @@ export default async function PisosPage({ searchParams }: PageProps) {
   }
 
   return (
-    <div className="container py-16">
-      <h1 className="h1 mb-8">Nuestras Propiedades</h1>
-      
-      <PropertyFilters />
+    <div style={{ backgroundColor: 'var(--color-background)', minHeight: 'calc(100vh - 100px)'}}>
+      <div className="container py-16">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+          <span className="material-symbols-outlined text-accent">search</span>
+          <h1 className="h1" style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0, color: 'var(--color-primary)' }}>Nuestras Propiedades</h1>
+        </div>
+        <p className="text-muted" style={{ marginBottom: '3rem', fontSize: '1.125rem' }}>Explora nuestro catálogo completo y filtra para encontrar tu hogar ideal.</p>
+        
+        <div style={{ background: 'var(--color-surface)', padding: '2rem', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-md)', marginBottom: '3rem' }}>
+          <PropertyFilters />
+        </div>
 
-      {properties.length > 0 ? (
-        <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2rem' }}>
-          {properties.map(property => (
-            <PropertyCard key={property.id} property={property} />
-          ))}
-        </div>
-      ) : (
-        <div style={{ textAlign: 'center', padding: '4rem 0', background: 'var(--color-surface)', borderRadius: 'var(--radius-lg)' }}>
-          <p className="text-lg text-muted">No se encontraron propiedades con esos filtros.</p>
-        </div>
-      )}
+        {properties.length > 0 ? (
+          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2rem' }}>
+            {properties.map(property => (
+              <PropertyCard key={property.id} property={property} />
+            ))}
+          </div>
+        ) : (
+          <div style={{ textAlign: 'center', padding: '6rem 0', background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)', border: '1px solid var(--color-border)' }}>
+            <span className="material-symbols-outlined" style={{ fontSize: '3rem', color: 'var(--color-border)', marginBottom: '1rem' }}>sentiment_dissatisfied</span>
+            <p className="text-lg text-muted">No se encontraron propiedades con esos filtros.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

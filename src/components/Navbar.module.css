@@ -2,96 +2,122 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background-color: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
+  width: 100%;
   border-bottom: 1px solid var(--color-border);
-  transition: all var(--transition-normal);
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 0 var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 var(--space-8);
+  }
+}
+
+.navContent {
   display: flex;
+  height: 5rem;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-4);
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-primary);
+.logoArea {
   display: flex;
   align-items: center;
-  gap: var(--spacing-2);
+  gap: var(--space-2);
 }
 
-.logo span {
-  color: var(--color-secondary);
+.logoIcon {
+  color: var(--color-primary);
+  width: 2rem;
+  height: 2rem;
+}
+
+.logoText {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--color-primary);
 }
 
 .navLinks {
-  display: flex;
-  gap: var(--spacing-8);
+  display: none;
+  align-items: center;
+  gap: 2.5rem;
 }
 
-.navLink {
-  font-weight: 500;
-  color: var(--color-text);
-  position: relative;
-  padding: var(--spacing-2) 0;
+@media (min-width: 768px) {
+  .navLinks {
+    display: flex;
+  }
 }
 
-.navLink::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--color-secondary);
-  transition: width var(--transition-normal);
-}
-
-.navLink:hover {
+.link {
+  font-size: 0.875rem;
+  font-weight: 600;
   color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
-.navLink:hover::after {
-  width: 100%;
+.link:hover {
+  color: var(--color-accent);
 }
 
 .actions {
   display: flex;
-  gap: var(--spacing-4);
   align-items: center;
+  gap: var(--space-4);
 }
 
-/* Mobile Menu Toggle */
-.mobileToggle {
+.ctaBtn {
   display: none;
-  flex-direction: column;
-  gap: 4px;
-  background: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-primary);
+  padding: 0.625rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: white;
   border: none;
   cursor: pointer;
-  padding: var(--spacing-2);
+  transition: background-color var(--transition-fast);
 }
 
-.mobileToggle span {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background-color: var(--color-text);
-  transition: all var(--transition-fast);
+.ctaBtn:hover {
+  background-color: rgba(36, 46, 61, 0.9);
 }
 
-@media (max-width: 768px) {
-  .navLinks, .actions {
-    display: none; /* In a real app we'd build a full mobile menu overlay */
-  }
-  .mobileToggle {
+@media (min-width: 1024px) {
+  .ctaBtn {
     display: flex;
   }
+}
+
+.userBtn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-full);
+  background-color: var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
+  text-decoration: none;
+  color: var(--color-text-muted);
 }

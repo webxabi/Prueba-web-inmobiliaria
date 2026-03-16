@@ -15,11 +15,11 @@ export default async function AdminDashboard() {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-        <h1 className="h2">Gestión de Propiedades</h1>
-        <Link href="/admin/property/new" className="btn btn-primary">+ Nuevo Inmueble</Link>
+        <h1 className="h2" style={{ color: 'var(--color-primary)' }}>Gestión de Propiedades</h1>
+        <Link href="/admin/property/new" className="btn btn-primary" style={{ backgroundColor: 'var(--color-accent)', color: 'var(--color-primary)' }}>+ Nuevo Inmueble</Link>
       </div>
 
-      <div style={{ background: 'white', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+      <div style={{ background: 'var(--color-surface)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-md)', border: '1px solid var(--color-border)' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
             <tr style={{ backgroundColor: 'var(--color-background)', borderBottom: '1px solid var(--color-border)' }}>

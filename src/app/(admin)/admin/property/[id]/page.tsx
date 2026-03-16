@@ -131,13 +131,13 @@ export default function PropertyFormPage() {
   };
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', background: 'white', padding: '2rem', borderRadius: '8px', boxShadow: 'var(--shadow-md)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-        <h1 className="h3">{isNew ? 'Nuevo Inmueble' : `Editar Inmueble #${id}`}</h1>
-        <Link href="/admin" className="text-muted">Volver</Link>
+    <div style={{ maxWidth: '800px', margin: '0 auto', background: 'var(--color-surface)', padding: '2.5rem', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-lg)', border: '1px solid var(--color-border)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
+        <h1 className="h3" style={{ color: 'var(--color-primary)', fontWeight: 800 }}>{isNew ? 'Nuevo Inmueble' : `Editar Inmueble #${id}`}</h1>
+        <Link href="/admin" className="text-muted" style={{ fontWeight: 600 }}>Volver</Link>
       </div>
 
-      {error && <div style={{ color: 'white', backgroundColor: 'var(--color-danger)', padding: '1rem', borderRadius: '4px', marginBottom: '1rem' }}>{error}</div>}
+      {error && <div style={{ color: 'white', backgroundColor: 'var(--color-danger)', padding: '1rem', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem', fontWeight: 600 }}>{error}</div>}
 
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         
@@ -174,8 +174,8 @@ export default function PropertyFormPage() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <label style={{ fontWeight: 500 }}>Descripción Completa</label>
-          <textarea name="description" value={formData.description} onChange={handleChange} required style={{ padding: '0.75rem', border: '1px solid var(--color-border)', borderRadius: '4px', minHeight: '150px' }} />
+          <label style={{ fontWeight: 600, color: 'var(--color-primary)' }}>Descripción Completa</label>
+          <textarea name="description" value={formData.description} onChange={handleChange} required style={{ padding: '0.875rem', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', minHeight: '150px', backgroundColor: 'var(--color-background)' }} />
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', background: 'var(--color-background)', padding: '1rem', borderRadius: '4px' }}>
@@ -210,8 +210,8 @@ export default function PropertyFormPage() {
           </div>
         )}
 
-        <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
-          <button type="submit" disabled={loading} className="btn btn-primary" style={{ flexGrow: 1 }}>
+        <div style={{ display: 'flex', gap: '1rem', marginTop: '2.5rem' }}>
+          <button type="submit" disabled={loading} className="btn btn-primary" style={{ flexGrow: 1, padding: '1rem', backgroundColor: 'var(--color-accent)', color: 'var(--color-primary)', borderRadius: 'var(--radius-md)', border: 'none', fontWeight: 700 }}>
             {loading ? 'Guardando...' : 'Guardar Inmueble'}
           </button>
           

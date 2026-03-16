@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import db from '@/lib/db';
-import PropertyCard from '@/components/PropertyCard';
 import styles from './page.module.css';
+import PropertyCard from '@/components/PropertyCard';
 
 async function getFeaturedProperties() {
   try {
-    return db.prepare('SELECT * FROM properties WHERE featured = 1 ORDER BY created_at DESC LIMIT 5').all() as any[];
+    return db.prepare('SELECT id, name, price, location, sqft, rooms, bathrooms, main_image_url, status FROM properties WHERE featured = 1 ORDER BY created_at DESC LIMIT 6').all() as any[];
   } catch (e) {
-    // In case DB isn't initialized fully or table empty
+    console.error('Error fetching featured properties', e);
     return [];
   }
 }
@@ -16,91 +16,115 @@ export default async function Home() {
   const featuredProperties = await getFeaturedProperties();
 
   return (
-    <div className={styles.homeWrapper}>
+    <>
       {/* Hero Section */}
       <section className={styles.hero}>
-        <div className={styles.heroOverlay}></div>
-        <div className={`container ${styles.heroContent}`}>
-          <h1 className="h1 animate-fade-in" style={{ color: 'white', marginBottom: '1rem' }}>
-            Encuentra tu próximo hogar
+        <div className={styles.heroBg}></div>
+        <div className={styles.heroContent}>
+          <span className={styles.heroBadge}>Inmobiliaria Premium</span>
+          <h1 className={styles.heroTitle}>
+            Encuentra tu próximo <span className={styles.textAccent}>hogar</span> de ensueño
           </h1>
-          <p className="text-lg animate-fade-in" style={{ color: 'rgba(255,255,255,0.9)', marginBottom: '2rem', animationDelay: '0.2s', maxWidth: '600px' }}>
-            Descubre una cuidada selección de pisos exclusivos. Tu tranquilidad es nuestra prioridad.
+          <p className={styles.heroDesc}>
+            Descubre nuestra exclusiva selección de propiedades de lujo en las ubicaciones más prestigiosas del país.
           </p>
-          <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <Link href="/pisos" className={`btn btn-primary ${styles.heroBtn}`}>
-              Ver pisos en venta
-            </Link>
-          </div>
+          
+          <Link href="/pisos" className="btn btn-primary" style={{ backgroundColor: 'var(--color-accent)', color: 'var(--color-primary)', fontSize: '1.125rem', padding: '1rem 2rem', borderRadius: 'var(--radius-lg)'}}>
+            Ver Propiedades en Venta
+          </Link>
         </div>
       </section>
 
       {/* Featured Properties Section */}
       <section className={styles.featuredSection}>
-        <div className="container">
+        <div className="container" style={{ maxWidth: '80rem', margin: '0 auto', padding: '0 1rem' }}>
+          
           <div className={styles.sectionHeader}>
-            <h2 className="h2">Pisos Destacados</h2>
-            <Link href="/pisos" className={styles.linkAccent}>
-              Ver todos →
+            <div className={styles.sectionTitleBlock}>
+              <h2 className={styles.sectionTitle}>Propiedades Destacadas</h2>
+              <p className={styles.sectionDesc}>Una selección curada de nuestras residencias más exclusivas y demandadas en el mercado actual.</p>
+            </div>
+            <Link href="/pisos" className={styles.viewAllLink}>
+              Ver todo el catálogo
+              <span className="material-symbols-outlined">arrow_forward</span>
             </Link>
           </div>
-          
-          {featuredProperties.length > 0 ? (
-            <div className={styles.propertiesGrid}>
-              {featuredProperties.map(property => (
-                <PropertyCard key={property.id} property={property} />
-              ))}
-            </div>
-          ) : (
-            <div className={styles.emptyState}>
-              <p>Actualmente no hay propiedades destacadas. Explora nuestro catálogo completo.</p>
-              <Link href="/pisos" className="btn btn-outline mt-4">Explorar catálogo</Link>
-            </div>
-          )}
+
+          <div className={styles.propertiesGrid}>
+            {featuredProperties.map((prop) => (
+              <PropertyCard key={prop.id} property={prop} />
+            ))}
+            {featuredProperties.length === 0 && (
+              <p className="text-muted" style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem 0' }}>No hay propiedades destacadas en este momento.</p>
+            )}
+          </div>
+
         </div>
       </section>
 
       {/* Why Choose Us Section */}
-      <section className={styles.benefitsSection}>
-        <div className="container">
-          <h2 className="h2 text-center mb-12">¿Por qué elegir Nova Estates?</h2>
-          <div className={styles.benefitsGrid}>
-            <div className={styles.benefitItem}>
-              <div className={styles.benefitIcon}>🤝</div>
-              <h3 className="h4">Asesoramiento Personalizado</h3>
-              <p className="text-muted">Analizamos tus necesidades reales para ofrecerte opciones que encajen con tu estilo de vida.</p>
+      <section className={styles.whySection}>
+        <div className="container" style={{ maxWidth: '80rem', margin: '0 auto', padding: '0 1rem' }}>
+          
+          <div className={styles.whyHeader}>
+            <h2 className={styles.whyTitle}>¿Por qué elegir Nova Estates?</h2>
+            <div className={styles.whyLine}></div>
+          </div>
+
+          <div className={styles.whyGrid}>
+            <div className={styles.whyItem}>
+              <div className={styles.whyIconWrap}>
+                <span className={`material-symbols-outlined ${styles.whyIcon}`}>support_agent</span>
+              </div>
+              <h4 className={styles.whyItemTitle}>Asesoramiento Personalizado</h4>
+              <p className={styles.whyItemDesc}>Guía experta en cada paso del proceso, adaptada a tus necesidades específicas.</p>
             </div>
-            <div className={styles.benefitItem}>
-              <div className={styles.benefitIcon}>💎</div>
-              <h3 className="h4">Selección Exclusiva</h3>
-              <p className="text-muted">Filtramos y comprobamos cada inmueble para garantizar los más altos estándares de calidad.</p>
+
+            <div className={styles.whyItem}>
+              <div className={styles.whyIconWrap}>
+                <span className={`material-symbols-outlined ${styles.whyIcon}`}>workspace_premium</span>
+              </div>
+              <h4 className={styles.whyItemTitle}>Selección Exclusiva</h4>
+              <p className={styles.whyItemDesc}>Acceso a las propiedades más prestigiosas y oportunidades fuera del mercado.</p>
             </div>
-            <div className={styles.benefitItem}>
-              <div className={styles.benefitIcon}>🧭</div>
-              <h3 className="h4">Acompañamiento Integral</h3>
-              <p className="text-muted">Te guiamos en cada paso legal y financiero hasta la firma ante notario.</p>
+
+            <div className={styles.whyItem}>
+              <div className={styles.whyIconWrap}>
+                <span className={`material-symbols-outlined ${styles.whyIcon}`}>handshake</span>
+              </div>
+              <h4 className={styles.whyItemTitle}>Acompañamiento Integral</h4>
+              <p className={styles.whyItemDesc}>Desde la búsqueda hasta la firma final, nos encargamos de toda la gestión.</p>
             </div>
-            <div className={styles.benefitItem}>
-              <div className={styles.benefitIcon}>🔍</div>
-              <h3 className="h4">Transparencia Total</h3>
-              <p className="text-muted">Sin sorpresas ni letra pequeña. Operaciones claras desde el primer contacto.</p>
+
+            <div className={styles.whyItem}>
+              <div className={styles.whyIconWrap}>
+                <span className={`material-symbols-outlined ${styles.whyIcon}`}>visibility</span>
+              </div>
+              <h4 className={styles.whyItemTitle}>Transparencia Total</h4>
+              <p className={styles.whyItemDesc}>Información clara, honesta y sin sorpresas en todas las operaciones.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className={styles.ctaSection}>
+        <div className="container" style={{ maxWidth: '80rem', margin: '0 auto', padding: '0 1rem' }}>
+          <div className={styles.ctaBox}>
+            <div className={styles.ctaPattern}></div>
+            <div className={styles.ctaContent}>
+              <h2 className={styles.ctaTitle}>¿Listo para dar el paso hacia tu nuevo hogar?</h2>
+              <p className={styles.ctaDesc}>Nuestros expertos están a tu disposición para ayudarte a encontrar la propiedad que siempre has soñado.</p>
+              <Link href="/contacto" className={styles.ctaButton}>
+                Solicitar Información Ahora
+                <span className="material-symbols-outlined">send</span>
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Contact CTA */}
-      <section className={styles.ctaSection}>
-        <div className={`container ${styles.ctaContainer}`}>
-          <h2 className="h2" style={{ color: 'white' }}>¿Listo para dar el paso?</h2>
-          <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.125rem' }}>
-            Déjanos tus datos y un asesor se pondrá en contacto contigo en menos de 24 horas.
-          </p>
-          <Link href="/contacto" className={styles.ctaBtn}>
-            Solicitar Información
-          </Link>
-        </div>
-      </section>
-    </div>
+    </>
   );
 }
