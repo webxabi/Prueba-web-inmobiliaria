@@ -5,12 +5,21 @@ import Link from 'next/link';
 
 async function getProperty(id: string) {
   try {
-    const property = db.prepare('SELECT * FROM properties WHERE id = ?').get(id) as any;
-    if (!property) return null;
-    const images = db.prepare('SELECT * FROM property_images WHERE property_id = ?').all(id) as any[];
+    const numericId = Number(id);
+    console.log("🚀 Buscando propiedad con ID numérico:", numericId);
+    if (isNaN(numericId)) return null;
+
+    const property = db.prepare('SELECT * FROM properties WHERE id = ?').get(numericId) as any;
+    if (!property) {
+      console.log("❌ Propiedad no encontrada en SQLite para ID:", numericId);
+      return null;
+    }
+    const images = db.prepare('SELECT * FROM property_images WHERE property_id = ?').all(numericId) as any[];
     return { ...property, images };
   } catch (e) {
-    return null;
+    console.error("💥 Error fatal leyendo DB en getProperty:", e);
+    // Don't swallow the error silently if it's a real crash
+    throw e;
   }
 }
 
