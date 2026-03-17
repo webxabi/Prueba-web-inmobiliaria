@@ -79,27 +79,25 @@ export default function PropertyFormPage() {
 
     try {
       let res;
-      if (isNew) {
-        // Create new requires FormData because of file uploads
-        const fd = new FormData();
-        Object.entries(formData).forEach(([key, val]) => fd.append(key, val.toString()));
-        if (mainImage) fd.append('main_image', mainImage);
-        else {
-          throw new Error('La imagen principal es obligatoria');
-        }
-        images.forEach(img => fd.append('images', img));
+      // Convert to FormData to support file uploads in both create and edit modes
+      const fd = new FormData();
+      Object.entries(formData).forEach(([key, val]) => fd.append(key, val.toString()));
+      if (mainImage) fd.append('main_image', mainImage);
+      else if (isNew) {
+        throw new Error('La imagen principal es obligatoria');
+      }
+      images.forEach(img => fd.append('images', img));
 
+      if (isNew) {
         res = await fetch('/api/properties', {
           method: 'POST',
           body: fd,
         });
 
       } else {
-        // Edit mode (simplified edit, handling files usually requires more logic to remove/add, we just update text fields)
         res = await fetch(`/api/properties/${id}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
+          body: fd,
         });
       }
 
@@ -194,21 +192,19 @@ export default function PropertyFormPage() {
           </div>
         </div>
 
-        {isNew && (
-          <div style={{ border: '1px solid var(--color-border)', padding: '1.5rem', borderRadius: '4px', marginTop: '1rem' }}>
-            <h3 style={{ marginBottom: '1rem', fontSize: '1.125rem' }}>Imágenes (Solo al crear)</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div>
-                <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem' }}>Imagen Principal *</label>
-                <input type="file" accept="image/*" onChange={handleMainImageChange} required />
-              </div>
-              <div>
-                <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem' }}>Galería de Imágenes (Opcional)</label>
-                <input type="file" accept="image/*" multiple onChange={handleImagesChange} />
-              </div>
+        <div style={{ border: '1px solid var(--color-border)', padding: '1.5rem', borderRadius: '4px', marginTop: '1rem' }}>
+          <h3 style={{ marginBottom: '1rem', fontSize: '1.125rem' }}>Imágenes {isNew ? '(Obligatoria)' : '(Sube para cambiar principal o añadir a galería)'}</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div>
+              <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem' }}>Imagen Principal {isNew ? '*' : ''}</label>
+              <input type="file" accept="image/*" onChange={handleMainImageChange} required={isNew} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem' }}>Galería de Imágenes (Opcional)</label>
+              <input type="file" accept="image/*" multiple onChange={handleImagesChange} />
             </div>
           </div>
-        )}
+        </div>
 
         <div style={{ display: 'flex', gap: '1rem', marginTop: '2.5rem' }}>
           <button type="submit" disabled={loading} className="btn btn-primary" style={{ flexGrow: 1, padding: '1rem', backgroundColor: 'var(--color-accent)', color: 'var(--color-primary)', borderRadius: 'var(--radius-md)', border: 'none', fontWeight: 700 }}>
