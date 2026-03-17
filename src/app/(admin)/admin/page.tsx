@@ -1,12 +1,19 @@
-import db from '@/lib/db';
+import supabase from '@/lib/supabase';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
 async function getProperties() {
   try {
-    return db.prepare('SELECT id, name, price, status, featured, created_at FROM properties ORDER BY created_at DESC').all() as any[];
+    const { data: properties, error } = await supabase
+      .from('properties')
+      .select('id, name, price, status, featured, created_at')
+      .order('created_at', { ascending: false });
+      
+    if (error) throw error;
+    return properties || [];
   } catch (e) {
+    console.error("Error fetching admin properties from Supabase", e);
     return [];
   }
 }

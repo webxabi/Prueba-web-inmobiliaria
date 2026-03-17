@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import db from '@/lib/db';
+import supabase from '@/lib/supabase';
 import styles from './page.module.css';
 import PropertyCard from '@/components/PropertyCard';
 
@@ -7,9 +7,17 @@ export const dynamic = 'force-dynamic';
 
 async function getFeaturedProperties() {
   try {
-    return db.prepare('SELECT id, name, price, location, sqft, rooms, bathrooms, main_image_url, status FROM properties WHERE featured = 1 ORDER BY created_at DESC LIMIT 6').all() as any[];
+    const { data: properties, error } = await supabase
+      .from('properties')
+      .select('id, name, price, location, sqft, rooms, bathrooms, main_image_url, status')
+      .eq('featured', true)
+      .order('created_at', { ascending: false })
+      .limit(6);
+
+    if (error) throw error;
+    return properties || [];
   } catch (e) {
-    console.error('Error fetching featured properties', e);
+    console.error('Error fetching featured properties from Supabase', e);
     return [];
   }
 }

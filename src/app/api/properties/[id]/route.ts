@@ -1,18 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
-import db from '@/lib/db';
-import fs from 'fs';
-import path from 'path';
+import supabase from '@/lib/supabase';
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const id = (await params).id;
-    const property = db.prepare('SELECT * FROM properties WHERE id = ?').get(id);
+    const { data: property, error } = await supabase
+      .from('properties')
+      .select('*')
+      .eq('id', id)
+      .single();
     
-    if (!property) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    if (error || !property) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
-    const images = db.prepare('SELECT * FROM property_images WHERE property_id = ?').all(id);
+    const { data: images } = await supabase
+      .from('property_images')
+      .select('*')
+      .eq('property_id', id);
     
-    return NextResponse.json({ ...property, images });
+    return NextResponse.json({ ...property, images: images || [] });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch property' }, { status: 500 });
   }
@@ -21,8 +26,12 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const id = (await params).id;
-    // We might want to delete the actual files from the disk, but for simplicity here we just delete DB rows
-    db.prepare('DELETE FROM properties WHERE id = ?').run(id);
+    // With Supabase, cascading deletes on foreign keys will automatically delete rows in property_images.
+    // However, deleting the storage bucket files should ideally be handled via an RPC or trigger, or manually.
+    // We will keep it simple here and just delete the DB record.
+    const { error } = await supabase.from('properties').delete().eq('id', id);
+    
+    if (error) throw error;
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete property' }, { status: 500 });
@@ -32,18 +41,24 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const id = (await params).id;
-    const body = await req.json(); // For edit, to be simple we might just update text fields inside admin, sending JSON instead of multipart.
+    const body = await req.json();
     
-    const stmt = db.prepare(`
-      UPDATE properties SET 
-        name = ?, description = ?, price = ?, sqft = ?, rooms = ?, bathrooms = ?, location = ?, status = ?, featured = ?
-      WHERE id = ?
-    `);
-    
-    stmt.run(
-      body.name, body.description, body.price, body.sqft, body.rooms, body.bathrooms, body.location, body.status, body.featured ? 1 : 0, id
-    );
+    const { error } = await supabase
+      .from('properties')
+      .update({
+        name: body.name,
+        description: body.description,
+        price: body.price,
+        sqft: body.sqft,
+        rooms: body.rooms,
+        bathrooms: body.bathrooms,
+        location: body.location,
+        status: body.status,
+        featured: body.featured ? true : false
+      })
+      .eq('id', id);
 
+    if (error) throw error;
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update property' }, { status: 500 });

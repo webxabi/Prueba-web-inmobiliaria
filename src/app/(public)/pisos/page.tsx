@@ -1,4 +1,4 @@
-import db from '@/lib/db';
+import supabase from '@/lib/supabase';
 import PropertyCard from '@/components/PropertyCard';
 import PropertyFilters from '@/components/PropertyFilters';
 
@@ -16,36 +16,32 @@ export default async function PisosPage({ searchParams }: PageProps) {
   const rooms = params.rooms as string;
   const bathrooms = params.bathrooms as string;
 
-  let query = 'SELECT * FROM properties WHERE 1=1';
-  const queryParams: any[] = [];
-
-  if (q) {
-    query += ' AND (name LIKE ? OR description LIKE ? OR location LIKE ?)';
-    queryParams.push(`%${q}%`, `%${q}%`, `%${q}%`);
-  }
-  if (minPrice) {
-    query += ' AND price >= ?';
-    queryParams.push(minPrice);
-  }
-  if (maxPrice) {
-    query += ' AND price <= ?';
-    queryParams.push(maxPrice);
-  }
-  if (rooms) {
-    query += ' AND rooms >= ?';
-    queryParams.push(rooms);
-  }
-  if (bathrooms) {
-    query += ' AND bathrooms >= ?';
-    queryParams.push(bathrooms);
-  }
-
-  query += ' ORDER BY created_at DESC';
-
   let properties = [];
   try {
-    properties = db.prepare(query).all(...queryParams) as any[];
+    let query = supabase.from('properties').select('*').order('created_at', { ascending: false });
+
+    if (q) {
+      // Using Supabase or/ilike for text search
+      query = query.or(`name.ilike.%${q}%,description.ilike.%${q}%,location.ilike.%${q}%`);
+    }
+    if (minPrice) {
+      query = query.gte('price', parseInt(minPrice));
+    }
+    if (maxPrice) {
+      query = query.lte('price', parseInt(maxPrice));
+    }
+    if (rooms) {
+      query = query.gte('rooms', parseInt(rooms));
+    }
+    if (bathrooms) {
+      query = query.gte('bathrooms', parseInt(bathrooms));
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+    properties = data || [];
   } catch (e) {
+    console.error("Error fetching filtered properties from Supabase:", e);
     properties = [];
   }
 

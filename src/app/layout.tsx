@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { initDb } from "@/lib/db";
-
-// Initialize the database on server start
-initDb();
 
 export const metadata: Metadata = {
   title: "Premium Real Estate | Encuentra tu próximo hogar",

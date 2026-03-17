@@ -1,32 +1,38 @@
 import { notFound } from 'next/navigation';
-import db from '@/lib/db';
+import supabase from '@/lib/supabase';
 import styles from './page.module.css';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
 export async function generateStaticParams() {
-  // Return empty array so Next.js knows NOT to pre-render any property pages
-  // at build time, and instead renders them on-demand when visited.
   return [];
 }
 
 async function getProperty(id: string) {
   try {
     const numericId = Number(id);
-    console.log("🚀 Buscando propiedad con ID numérico:", numericId);
     if (isNaN(numericId)) return null;
 
-    const property = db.prepare('SELECT * FROM properties WHERE id = ?').get(numericId) as any;
-    if (!property) {
-      console.log("❌ Propiedad no encontrada en SQLite para ID:", numericId);
+    const { data: property, error } = await supabase
+      .from('properties')
+      .select('*')
+      .eq('id', numericId)
+      .single();
+
+    if (error || !property) {
+      console.error("❌ Propiedad no encontrada en Supabase para ID:", numericId, error);
       return null;
     }
-    const images = db.prepare('SELECT * FROM property_images WHERE property_id = ?').all(numericId) as any[];
-    return { ...property, images };
+
+    const { data: images } = await supabase
+      .from('property_images')
+      .select('*')
+      .eq('property_id', numericId);
+
+    return { ...property, images: images || [] };
   } catch (e) {
     console.error("💥 Error fatal leyendo DB en getProperty:", e);
-    // Don't swallow the error silently if it's a real crash
     throw e;
   }
 }
