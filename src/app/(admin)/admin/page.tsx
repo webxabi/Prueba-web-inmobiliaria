@@ -1,6 +1,8 @@
 import db from '@/lib/db';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 async function getProperties() {
   try {
     return db.prepare('SELECT id, name, price, status, featured, created_at FROM properties ORDER BY created_at DESC').all() as any[];

@@ -3,6 +3,8 @@ import db from '@/lib/db';
 import styles from './page.module.css';
 import PropertyCard from '@/components/PropertyCard';
 
+export const dynamic = 'force-dynamic';
+
 async function getFeaturedProperties() {
   try {
     return db.prepare('SELECT id, name, price, location, sqft, rooms, bathrooms, main_image_url, status FROM properties WHERE featured = 1 ORDER BY created_at DESC LIMIT 6').all() as any[];
