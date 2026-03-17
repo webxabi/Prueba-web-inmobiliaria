@@ -3,6 +3,7 @@ import supabase from '@/lib/supabase';
 import styles from './page.module.css';
 import Link from 'next/link';
 import ImageGallery from '@/components/ImageGallery';
+import ContactForm from '@/components/ContactForm';
 
 export const dynamic = 'force-dynamic';
 
@@ -125,6 +126,35 @@ export default async function PropertyPage({ params }: { params: { id: string } 
             <div className={styles.description}>
               {property.description}
             </div>
+
+            {property.youtube_url && (() => {
+              // Convert YouTube URL to embeddable format
+              let videoId = '';
+              try {
+                const url = new URL(property.youtube_url);
+                if (url.hostname.includes('youtu.be')) {
+                  videoId = url.pathname.slice(1);
+                } else {
+                  videoId = url.searchParams.get('v') || '';
+                }
+              } catch { /* invalid URL, skip */ }
+
+              if (!videoId) return null;
+              return (
+                <div style={{ marginTop: '2rem' }}>
+                  <h2 className={styles.descriptionTitle}>Vídeo del Inmueble</h2>
+                  <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${videoId}`}
+                      title="Vídeo del inmueble"
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         </div>
 
@@ -136,32 +166,7 @@ export default async function PropertyPage({ params }: { params: { id: string } 
               <p className="text-muted text-sm mt-2">Solicita más información o una visita sin compromiso.</p>
             </div>
             
-            <form action={async (formData) => {
-              'use server';
-              // Here we would normally plug in email sending logic like Resend or SendGrid.
-              // For demonstration, we simply log or save a dummy state.
-              console.log('Contacto recibido:', formData.get('name'), formData.get('email'));
-            }}>
-              <div className={styles.formField}>
-                <label>Nombre y Apellidos</label>
-                <input type="text" name="name" className={styles.formInput} required placeholder="Juan Pérez" />
-              </div>
-              <div className={styles.formField}>
-                <label>Email</label>
-                <input type="email" name="email" className={styles.formInput} required placeholder="juan@ejemplo.com" />
-              </div>
-              <div className={styles.formField}>
-                <label>Teléfono</label>
-                <input type="tel" name="phone" className={styles.formInput} placeholder="600 000 000" />
-              </div>
-              <div className={styles.formField}>
-                <label>Mensaje</label>
-                <textarea name="message" className={styles.formTextarea} required defaultValue={`Hola, me gustaría recibir más información sobre el inmueble "${property.name}" (Ref: ${property.id}).`}></textarea>
-              </div>
-              <button type="submit" className="btn btn-primary w-full mt-4">
-                Enviar Solicitud
-              </button>
-            </form>
+            <ContactForm variant="property" propertyId={property.id} propertyName={property.name} />
 
             <div className={styles.agentInfo}>
               <div className={styles.agentAvatar}>👨‍💼</div>

@@ -20,6 +20,7 @@ export default function PropertyFormPage() {
     status: 'disponible',
     featured: false,
     main_image_url: '',
+    youtube_url: '',
   });
   
   const [mainImage, setMainImage] = useState<File | null>(null);
@@ -48,6 +49,7 @@ export default function PropertyFormPage() {
               status: data.status,
               featured: data.featured === 1 || data.featured === true,
               main_image_url: data.main_image_url || '',
+              youtube_url: data.youtube_url || '',
             });
             if (data.images) {
               setExistingImages(data.images);
@@ -194,6 +196,12 @@ export default function PropertyFormPage() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <label style={{ fontWeight: 600, color: 'var(--color-primary)' }}>Descripción Completa</label>
           <textarea name="description" value={formData.description} onChange={handleChange} required style={{ padding: '0.875rem', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', minHeight: '150px', backgroundColor: 'var(--color-background)' }} />
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <label style={{ fontWeight: 600, color: 'var(--color-primary)' }}>🎬 Vídeo de YouTube (Opcional)</label>
+          <input type="url" name="youtube_url" value={formData.youtube_url} onChange={handleChange} placeholder="https://www.youtube.com/watch?v=XXXXXX" style={{ padding: '0.875rem', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--color-background)' }} />
+          <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Pega la URL completa de YouTube. Se mostrará debajo de la descripción en la ficha pública.</span>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', background: 'var(--color-background)', padding: '1rem', borderRadius: '4px' }}>

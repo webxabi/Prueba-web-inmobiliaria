@@ -52,7 +52,8 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       bathrooms: parseInt(formData.get('bathrooms') as string),
       location: formData.get('location') as string,
       status: formData.get('status') as string,
-      featured: formData.get('featured') === 'true'
+      featured: formData.get('featured') === 'true',
+      youtube_url: (formData.get('youtube_url') as string) || '',
     };
 
     const mainImageFile = formData.get('main_image') as File | null;

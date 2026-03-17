@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import styles from './page.module.css';
+import ContactForm from '@/components/ContactForm';
 
 export const metadata: Metadata = {
   title: 'Contacta con nosotros',
@@ -51,32 +51,7 @@ export default function ContactPage() {
 
           <div style={{ background: 'var(--color-surface)', padding: '2.5rem', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-lg)' }}>
             <h2 className="h3 mb-6" style={{ color: 'var(--color-primary)' }}>Envíanos un mensaje</h2>
-            <form style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }} action={async (formData) => {
-              'use server';
-              console.log('General contact form submitted', formData.get('name'));
-            }}>
-              <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.875rem', color: 'var(--color-primary)' }}>Nombre Completo</label>
-                <input type="text" name="name" required style={{ width: '100%', padding: '0.875rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', backgroundColor: 'var(--color-background)' }} />
-              </div>
-              <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.875rem', color: 'var(--color-primary)' }}>Email</label>
-                <input type="email" name="email" required style={{ width: '100%', padding: '0.875rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', backgroundColor: 'var(--color-background)' }} />
-              </div>
-              <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.875rem', color: 'var(--color-primary)' }}>Motivo de la consulta</label>
-                <select name="subject" style={{ width: '100%', padding: '0.875rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', backgroundColor: 'var(--color-background)' }}>
-                  <option value="comprar">Comprar una propiedad</option>
-                  <option value="vender">Vender una propiedad</option>
-                  <option value="otros">Otros</option>
-                </select>
-              </div>
-              <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.875rem', color: 'var(--color-primary)' }}>Mensaje</label>
-                <textarea name="message" required style={{ width: '100%', padding: '0.875rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', minHeight: '120px', resize: 'vertical', backgroundColor: 'var(--color-background)' }}></textarea>
-              </div>
-              <button type="submit" className="btn btn-primary" style={{ padding: '1rem', marginTop: '1rem', width: '100%', backgroundColor: 'var(--color-accent)', color: 'var(--color-primary)', fontWeight: 700, border: 'none', borderRadius: 'var(--radius-md)' }}>Enviar Mensaje</button>
-            </form>
+            <ContactForm variant="general" />
           </div>
 
         </div>

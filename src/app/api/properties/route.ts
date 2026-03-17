@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
     const location = formData.get('location') as string;
     const status = formData.get('status') as string || 'disponible';
     const featured = formData.get('featured') === 'true';
+    const youtube_url = (formData.get('youtube_url') as string) || '';
     
     // Main image
     let main_image_url = '';
@@ -60,7 +61,7 @@ export async function POST(req: NextRequest) {
     const { data: insertedProperty, error: insertError } = await supabase
       .from('properties')
       .insert([
-        { name, description, price, sqft, rooms, bathrooms, location, status, featured, main_image_url }
+        { name, description, price, sqft, rooms, bathrooms, location, status, featured, main_image_url, youtube_url }
       ])
       .select('id')
       .single();
