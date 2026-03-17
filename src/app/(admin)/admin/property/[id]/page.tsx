@@ -19,9 +19,11 @@ export default function PropertyFormPage() {
     location: '',
     status: 'disponible',
     featured: false,
+    main_image_url: '',
   });
   
   const [mainImage, setMainImage] = useState<File | null>(null);
+  const [existingImages, setExistingImages] = useState<Array<{ id: number, image_url: string }>>([]);
   const [images, setImages] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -44,8 +46,12 @@ export default function PropertyFormPage() {
               bathrooms: data.bathrooms.toString(),
               location: data.location,
               status: data.status,
-              featured: data.featured === 1,
+              featured: data.featured === 1 || data.featured === true,
+              main_image_url: data.main_image_url || '',
             });
+            if (data.images) {
+              setExistingImages(data.images);
+            }
           }
         })
         .finally(() => setLoading(false));
@@ -69,6 +75,20 @@ export default function PropertyFormPage() {
   const handleImagesChange = (e: any) => {
     if (e.target.files) {
       setImages(Array.from(e.target.files));
+    }
+  };
+
+  const handleDeleteImage = async (imageId: number) => {
+    if (!confirm('¿Seguro que deseas eliminar esta imagen de la galería?')) return;
+    try {
+      const res = await fetch(`/api/images/${imageId}`, { method: 'DELETE' });
+      if (res.ok) {
+        setExistingImages(prev => prev.filter(img => img.id !== imageId));
+      } else {
+        alert('Error al eliminar la imagen');
+      }
+    } catch (err) {
+      alert('Error de conexión');
     }
   };
 
@@ -194,13 +214,40 @@ export default function PropertyFormPage() {
 
         <div style={{ border: '1px solid var(--color-border)', padding: '1.5rem', borderRadius: '4px', marginTop: '1rem' }}>
           <h3 style={{ marginBottom: '1rem', fontSize: '1.125rem' }}>Imágenes {isNew ? '(Obligatoria)' : '(Sube para cambiar principal o añadir a galería)'}</h3>
+          
+          {!isNew && existingImages.length > 0 && (
+            <div style={{ marginBottom: '2rem' }}>
+              <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.75rem' }}>Galería Actual (Haz clic en la X para borrar)</label>
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                {existingImages.map((img) => (
+                  <div key={img.id} style={{ position: 'relative', width: '120px', height: '120px', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--color-border)' }}>
+                    <img src={img.image_url} alt="miniatura" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <button 
+                      type="button" 
+                      onClick={() => handleDeleteImage(img.id)}
+                      style={{ position: 'absolute', top: '4px', right: '4px', background: 'var(--color-danger)', color: 'white', border: 'none', borderRadius: '50%', width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '12px' }}
+                      title="Eliminar imagen"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <div>
               <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem' }}>Imagen Principal {isNew ? '*' : ''}</label>
+              {formData.main_image_url && !isNew && (
+                <div style={{ marginBottom: '0.5rem' }}>
+                   <img src={formData.main_image_url} alt="Imagen principal" style={{ width: '120px', height: '80px', objectFit: 'cover', borderRadius: '4px', border: '1px solid var(--color-border)' }} />
+                </div>
+              )}
               <input type="file" accept="image/*" onChange={handleMainImageChange} required={isNew} />
             </div>
             <div>
-              <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem' }}>Galería de Imágenes (Opcional)</label>
+              <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem' }}>Añadir Imágenes a la Galería (Opcional)</label>
               <input type="file" accept="image/*" multiple onChange={handleImagesChange} />
             </div>
           </div>
