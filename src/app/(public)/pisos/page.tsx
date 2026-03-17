@@ -1,6 +1,11 @@
+import { Metadata } from 'next';
 import supabase from '@/lib/supabase';
 import PropertyCard from '@/components/PropertyCard';
 import PropertyFilters from '@/components/PropertyFilters';
+
+export const metadata: Metadata = {
+  title: 'Propiedades en venta',
+};
 
 export const dynamic = 'force-dynamic';
 

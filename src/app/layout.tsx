@@ -2,8 +2,24 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Premium Real Estate | Encuentra tu próximo hogar",
+  title: {
+    template: '%s | Nova Estates',
+    default: 'Nova Estates | Encuentra tu próximo hogar',
+  },
   description: "Inmobiliaria especializada en venta de pisos exclusivos con asesoramiento personalizado.",
+  keywords: ["inmobiliaria", "pisos en venta", "comprar casa", "inmuebles exclusivos", "Nova Estates"],
+  openGraph: {
+    title: 'Nova Estates | Encuentra tu próximo hogar',
+    description: 'Inmobiliaria especializada en venta de pisos exclusivos con asesoramiento personalizado.',
+    url: 'https://www.novaestates.com',
+    siteName: 'Nova Estates',
+    locale: 'es_ES',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  }
 };
 
 export default function RootLayout({

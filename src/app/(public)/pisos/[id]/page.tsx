@@ -6,6 +6,25 @@ import ImageGallery from '@/components/ImageGallery';
 
 export const dynamic = 'force-dynamic';
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const { id } = await params;
+  const numericId = Number(id);
+  if (isNaN(numericId)) return { title: 'Propiedad no encontrada' };
+
+  const { data: property } = await supabase
+    .from('properties')
+    .select('name, description')
+    .eq('id', numericId)
+    .single();
+
+  if (!property) return { title: 'Propiedad no encontrada' };
+
+  return {
+    title: `${property.name} | Nova Estates`,
+    description: property.description.substring(0, 160) + '...',
+  };
+}
+
 export async function generateStaticParams() {
   return [];
 }

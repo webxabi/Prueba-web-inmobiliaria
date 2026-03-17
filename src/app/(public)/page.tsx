@@ -1,7 +1,12 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import supabase from '@/lib/supabase';
 import styles from './page.module.css';
 import PropertyCard from '@/components/PropertyCard';
+
+export const metadata: Metadata = {
+  title: 'Pisos en venta en Madrid',
+};
 
 export const dynamic = 'force-dynamic';
 
