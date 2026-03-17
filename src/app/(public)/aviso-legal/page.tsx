@@ -8,11 +8,11 @@ export default function LegalPage() {
         </p>
         <section>
           <h2 className="h4 mb-2" style={{ color: 'var(--color-text)' }}>1. Datos Identificativos</h2>
-          <p>La empresa titular de dominio web es Nova Estates S.L. con domicilio a estos efectos en Av. Principal 123, Madrid, número de C.I.F.: B-12345678.</p>
+          <p>La empresa titular de dominio web es EVOLO REAL STATE S.L. con domicilio a estos efectos en Av. Principal 123, Madrid, número de C.I.F.: B-12345678.</p>
         </section>
         <section>
           <h2 className="h4 mb-2" style={{ color: 'var(--color-text)' }}>2. Política de Privacidad</h2>
-          <p>En cumplimiento de lo establecido en el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, le informamos que los datos personales que nos facilite a través de los formularios serán tratados con estricta confidencialidad bajo la responsabilidad de Nova Estates S.L. con la única finalidad de gestionar sus solicitudes de información inmobiliaria.</p>
+          <p>En cumplimiento de lo establecido en el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, le informamos que los datos personales que nos facilite a través de los formularios serán tratados con estricta confidencialidad bajo la responsabilidad de EVOLO REAL STATE S.L. con la única finalidad de gestionar sus solicitudes de información inmobiliaria.</p>
         </section>
         <section>
           <h2 className="h4 mb-2" style={{ color: 'var(--color-text)' }}>3. Política de Cookies</h2>

@@ -3,16 +3,16 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Nova Estates',
-    default: 'Nova Estates | Encuentra tu próximo hogar',
+    template: '%s | EVOLO REAL STATE',
+    default: 'EVOLO REAL STATE | Encuentra tu próximo hogar',
   },
   description: "Inmobiliaria especializada en venta de pisos exclusivos con asesoramiento personalizado.",
-  keywords: ["inmobiliaria", "pisos en venta", "comprar casa", "inmuebles exclusivos", "Nova Estates"],
+  keywords: ["inmobiliaria", "pisos en venta", "comprar casa", "inmuebles exclusivos", "EVOLO REAL STATE"],
   openGraph: {
-    title: 'Nova Estates | Encuentra tu próximo hogar',
+    title: 'EVOLO REAL STATE | Encuentra tu próximo hogar',
     description: 'Inmobiliaria especializada en venta de pisos exclusivos con asesoramiento personalizado.',
-    url: 'https://www.novaestates.com',
-    siteName: 'Nova Estates',
+    url: 'https://www.evolorealstate.com',
+    siteName: 'EVOLO REAL STATE',
     locale: 'es_ES',
     type: 'website',
   },

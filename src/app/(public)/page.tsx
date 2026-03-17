@@ -82,7 +82,7 @@ export default async function Home() {
         <div className="container" style={{ maxWidth: '80rem', margin: '0 auto', padding: '0 1rem' }}>
           
           <div className={styles.whyHeader}>
-            <h2 className={styles.whyTitle}>¿Por qué elegir Nova Estates?</h2>
+            <h2 className={styles.whyTitle}>¿Por qué elegir EVOLO REAL STATE?</h2>
             <div className={styles.whyLine}></div>
           </div>
 

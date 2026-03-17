@@ -12,7 +12,7 @@ export default function AboutPage() {
           <h1 className="h1 mb-8 text-center" style={{ color: 'var(--color-primary)', fontWeight: 800 }}>Sobre Nosotros</h1>
           <div className="text-lg text-muted" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', lineHeight: 1.8 }}>
             <p>
-              En <strong>Nova Estates</strong>, entendemos que comprar o vender una propiedad es una de las decisiones financieras y emocionales más importantes de la vida. Por eso, hemos creado un modelo de inmobiliaria basado en la exclusividad, la confianza y el servicio integral.
+              En <strong>EVOLO REAL STATE</strong>, entendemos que comprar o vender una propiedad es una de las decisiones financieras y emocionales más importantes de la vida. Por eso, hemos creado un modelo de inmobiliaria basado en la exclusividad, la confianza y el servicio integral.
             </p>
             <p>
               Con más de 10 años de experiencia en el sector inmobiliario premium, nuestro equipo de expertos está dedicado a ofrecer un asesoramiento personalizado, analizando cada detalle para asegurar que encuentres no solo una casa, sino tu verdadero hogar.

@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   if (!property) return { title: 'Propiedad no encontrada' };
 
   return {
-    title: `${property.name} | Nova Estates`,
+    title: `${property.name} | EVOLO REAL STATE`,
     description: property.description.substring(0, 160) + '...',
   };
 }
@@ -167,7 +167,7 @@ export default async function PropertyPage({ params }: { params: { id: string } 
               <div className={styles.agentAvatar}>👨‍💼</div>
               <div className={styles.agentDetails}>
                 <span className={styles.agentName}>Equipo Comercial</span>
-                <span className={styles.agentRole}>Nova Estates</span>
+                <span className={styles.agentRole}>EVOLO REAL STATE</span>
               </div>
             </div>
             

@@ -13,7 +13,7 @@ export default function Navbar() {
                 <path clipRule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fillRule="evenodd"></path>
               </svg>
             </div>
-            <span className={styles.logoText}>Nova Estates</span>
+            <span className={styles.logoText}>EVOLO REAL STATE</span>
           </Link>
 
           <nav className={styles.navLinks}>

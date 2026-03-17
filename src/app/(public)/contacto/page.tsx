@@ -36,7 +36,7 @@ export default function ContactPage() {
                 <span className="material-symbols-outlined text-accent" style={{ fontSize: '1.5rem', marginTop: '4px' }}>mail</span>
                 <div>
                   <strong style={{ display: 'block', fontSize: '1.125rem', marginBottom: '4px', color: 'var(--color-primary)' }}>Correo Electrónico</strong>
-                  <a href="mailto:info@novaestates.com" className="text-muted" style={{ textDecoration: 'underline' }}>info@novaestates.com</a>
+                  <a href="mailto:info@evolorealstate.com" className="text-muted" style={{ textDecoration: 'underline' }}>info@evolorealstate.com</a>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
