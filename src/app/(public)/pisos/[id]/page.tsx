@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import supabase from '@/lib/supabase';
 import styles from './page.module.css';
 import Link from 'next/link';
+import ImageGallery from '@/components/ImageGallery';
 
 export const dynamic = 'force-dynamic';
 
@@ -76,17 +77,11 @@ export default async function PropertyPage({ params }: { params: { id: string } 
         
         {/* Main Info Side */}
         <div className={styles.mainSide}>
-          <div className={styles.gallery}>
-            <img src={property.main_image_url || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1200'} alt={property.name} className={styles.mainImage} />
-            {property.images && property.images.length > 0 && (
-              <div className={styles.thumbnails}>
-                <img src={property.main_image_url} className={`${styles.thumbnail} ${styles.thumbnailActive}`} alt="miniatura" />
-                {property.images.map((img: any) => (
-                  <img key={img.id} src={img.image_url} className={styles.thumbnail} alt="miniatura gallery" />
-                ))}
-              </div>
-            )}
-          </div>
+          <ImageGallery 
+            mainImageUrl={property.main_image_url} 
+            images={property.images} 
+            name={property.name} 
+          />
 
           <div className={`${styles.infoSection} mt-8`}>
             <div className={styles.header}>
