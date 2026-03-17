@@ -3,6 +3,8 @@ import db from '@/lib/db';
 import styles from './page.module.css';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 async function getProperty(id: string) {
   try {
     const numericId = Number(id);
