@@ -5,6 +5,12 @@ import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
+export async function generateStaticParams() {
+  // Return empty array so Next.js knows NOT to pre-render any property pages
+  // at build time, and instead renders them on-demand when visited.
+  return [];
+}
+
 async function getProperty(id: string) {
   try {
     const numericId = Number(id);
@@ -30,7 +36,21 @@ export default async function PropertyPage({ params }: { params: { id: string } 
   const property = await getProperty(id);
 
   if (!property) {
-    notFound();
+    return (
+      <div className={`container ${styles.pageWrapper}`} style={{ textAlign: 'center', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <h1 style={{ color: 'var(--color-danger)', fontSize: '2rem', marginBottom: '1rem' }}>Propiedad no encontrada</h1>
+        <p className="text-muted text-lg mb-4">No se ha podido localizar en la base de datos el ID: <strong>{id}</strong>.</p>
+        <div style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', padding: '2rem', borderRadius: 'var(--radius-lg)', textAlign: 'left', maxWidth: '600px' }}>
+          <h2 className="h4 mb-2">Información Técnica (Diagnóstico):</h2>
+          <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', color: 'var(--color-text-muted)' }}>
+            <li>ID Original URL: <code>{JSON.stringify(id)}</code></li>
+            <li>ID Parseado (Numérico): <code>{Number(id)}</code></li>
+            <li>Tipo de Entorno: <code>{process.env.NODE_ENV}</code></li>
+          </ul>
+        </div>
+        <Link href="/pisos" className="btn btn-primary mt-8">Volver al catálogo</Link>
+      </div>
+    );
   }
 
   const formattedPrice = new Intl.NumberFormat('es-ES', {

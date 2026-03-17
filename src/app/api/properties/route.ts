@@ -42,8 +42,13 @@ export async function POST(req: NextRequest) {
     if (file && file.size > 0) {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
-      const fileName = Date.now() + '-' + file.name.replace(/\\s+/g, '-');
-      const uploadDir = path.join(process.cwd(), 'public/uploads');
+      const fileName = Date.now() + '-' + file.name.replace(/\s+/g, '-');
+      // For Next.js in production (especially Hostinger/cPanel), the public folder
+      // is usually at the root of the project where the server runs.
+      const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
       const filePath = path.join(uploadDir, fileName);
       fs.writeFileSync(filePath, buffer);
       main_image_url = '/uploads/' + fileName;
@@ -66,8 +71,12 @@ export async function POST(req: NextRequest) {
       if (img && img.size > 0) {
         const bytes = await img.arrayBuffer();
         const buffer = Buffer.from(bytes);
-        const fileName = Date.now() + '-gal-' + img.name.replace(/\\s+/g, '-');
-        const filePath = path.join(process.cwd(), 'public/uploads', fileName);
+        const fileName = Date.now() + '-gal-' + img.name.replace(/\s+/g, '-');
+        const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+        if (!fs.existsSync(uploadDir)) {
+          fs.mkdirSync(uploadDir, { recursive: true });
+        }
+        const filePath = path.join(uploadDir, fileName);
         fs.writeFileSync(filePath, buffer);
         imgStmt.run(info.lastInsertRowid, '/uploads/' + fileName);
       }

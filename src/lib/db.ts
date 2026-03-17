@@ -3,7 +3,10 @@ import path from 'path';
 import fs from 'fs';
 import bcrypt from 'bcryptjs';
 
-const dbPath = path.join(process.cwd(), 'inmobiliaria.db');
+// Use a more robust path resolution for production hostinger environments
+const dbPath = process.env.DATABASE_URL 
+  ? process.env.DATABASE_URL 
+  : path.join(process.cwd(), 'inmobiliaria.db');
 
 // Ensure the db file exists logic is somewhat handled by better-sqlite3 but let's be safe
 const db = new sqlite3(dbPath, { verbose: console.log });
