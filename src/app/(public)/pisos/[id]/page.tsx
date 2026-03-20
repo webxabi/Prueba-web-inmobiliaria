@@ -176,7 +176,7 @@ export default async function PropertyPage({ params }: { params: { id: string } 
               </div>
             </div>
             
-            <a href={`https://wa.me/34900123456?text=Hola,%20me%20interesa%20el%20piso%20${property.id}`} target="_blank" rel="noreferrer" className="btn btn-outline w-full mt-4" style={{ borderColor: '#25D366', color: '#25D366' }}>
+            <a href={`https://wa.me/34696571867?text=Hola,%20me%20interesa%20el%20piso%20${property.id}`} target="_blank" rel="noreferrer" className="btn btn-outline w-full mt-4" style={{ borderColor: '#25D366', color: '#25D366' }}>
               Contactar por WhatsApp
             </a>
           </div>

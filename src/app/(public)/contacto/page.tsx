@@ -22,14 +22,14 @@ export default function ContactPage() {
                 <span className="material-symbols-outlined text-accent" style={{ fontSize: '1.5rem', marginTop: '4px' }}>location_on</span>
                 <div>
                   <strong style={{ display: 'block', fontSize: '1.125rem', marginBottom: '4px', color: 'var(--color-primary)' }}>Oficina Principal</strong>
-                  <span className="text-muted">Calle Serrano 45, Planta 4<br/>28001 Madrid, España</span>
+                  <span className="text-muted">Calle Castaño 17, Urb. Entreálamos<br/>28222 Majadahonda, Madrid</span>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                 <span className="material-symbols-outlined text-accent" style={{ fontSize: '1.5rem', marginTop: '4px' }}>call</span>
                 <div>
                   <strong style={{ display: 'block', fontSize: '1.125rem', marginBottom: '4px', color: 'var(--color-primary)' }}>Teléfono</strong>
-                  <a href="tel:+34912345678" className="text-muted" style={{ textDecoration: 'underline' }}>+34 912 345 678</a>
+                  <a href="tel:+34696571867" className="text-muted" style={{ textDecoration: 'underline' }}>696 571 867</a>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
