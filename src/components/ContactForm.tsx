@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 // ⬇️ CAMBIA ESTE ID POR EL TUYO DE FORMSPREE ⬇️
 // Obtén tu ID en https://formspree.io → Crear formulario → Copiar el endpoint ID
-const FORMSPREE_FORM_ID = 'TU_FORM_ID';
+const FORMSPREE_FORM_ID = 'xaqpkejo';
 
 interface ContactFormProps {
   propertyId?: number;
