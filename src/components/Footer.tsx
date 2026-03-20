@@ -22,7 +22,7 @@ export default function Footer() {
             <div className={styles.socialLinks}>
               <a href="#" className={styles.socialBtn}><span className={`material-symbols-outlined ${styles.socialIcon}`}>share</span></a>
               <a href="mailto:info@evolorealstate.com" className={styles.socialBtn}><span className={`material-symbols-outlined ${styles.socialIcon}`}>mail</span></a>
-              <a href="tel:+34912345678" className={styles.socialBtn}><span className={`material-symbols-outlined ${styles.socialIcon}`}>call</span></a>
+              <a href="tel:+34696571867" className={styles.socialBtn}><span className={`material-symbols-outlined ${styles.socialIcon}`}>call</span></a>
             </div>
           </div>
 
