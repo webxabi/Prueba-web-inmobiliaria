@@ -69,6 +69,7 @@ export default function Footer() {
         <div className={styles.bottomBar}>
           <p>© {new Date().getFullYear()} EVOLO REAL STATE S.L. Todos los derechos reservados.</p>
           <div className={styles.legalLinks}>
+            <Link href="/terminos-legales" className={styles.legalLink}>Términos Legales</Link>
             <Link href="/aviso-legal" className={styles.legalLink}>Aviso Legal</Link>
             <Link href="/privacidad" className={styles.legalLink}>Privacidad</Link>
             <Link href="/cookies" className={styles.legalLink}>Cookies</Link>
