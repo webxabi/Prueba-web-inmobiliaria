@@ -51,11 +51,11 @@ export default function Footer() {
             <ul className={styles.contactList}>
               <li className={styles.contactItem}>
                 <span className={`material-symbols-outlined ${styles.contactIcon}`}>location_on</span>
-                <span>Calle Serrano 45, Planta 4<br/>28001 Madrid, España</span>
+                <span>Calle Castaño 17, Urb. Entreálamos<br/>28222 Majadahonda, Madrid</span>
               </li>
               <li className={styles.contactItem}>
                 <span className={`material-symbols-outlined ${styles.contactIcon}`}>call</span>
-                <span>+34 912 345 678</span>
+                <span>696 571 867</span>
               </li>
               <li className={styles.contactItem}>
                 <span className={`material-symbols-outlined ${styles.contactIcon}`}>mail</span>
