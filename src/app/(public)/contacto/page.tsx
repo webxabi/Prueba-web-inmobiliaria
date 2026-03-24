@@ -30,6 +30,8 @@ export default function ContactPage() {
                 <div>
                   <strong style={{ display: 'block', fontSize: '1.125rem', marginBottom: '4px', color: 'var(--color-primary)' }}>Teléfono</strong>
                   <a href="tel:+34696571867" className="text-muted" style={{ textDecoration: 'underline' }}>696 571 867</a>
+                  <br/>
+                  <a href="tel:+34690728906" className="text-muted" style={{ textDecoration: 'underline' }}>690 728 906</a>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>

@@ -55,7 +55,7 @@ export default function Footer() {
               </li>
               <li className={styles.contactItem}>
                 <span className={`material-symbols-outlined ${styles.contactIcon}`}>call</span>
-                <span>696 571 867</span>
+                <span>696 571 867<br/>690 728 906</span>
               </li>
               <li className={styles.contactItem}>
                 <span className={`material-symbols-outlined ${styles.contactIcon}`}>mail</span>
