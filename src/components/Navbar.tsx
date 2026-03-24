@@ -27,9 +27,6 @@ export default function Navbar() {
             <Link href="/contacto" className={styles.ctaBtn}>
               Solicitar Información
             </Link>
-            <Link href="/admin" className={styles.userBtn}>
-              <span className="material-symbols-outlined">person</span>
-            </Link>
           </div>
 
         </div>
